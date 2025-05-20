@@ -11,8 +11,8 @@ PYTHON_VERSION = '3.11'
 nixPkgs = ['...'] # add nodejs since it is needed to build the frontend
 
 # Then install backend dependencies
-[phases.backend-install]
-cmds = ["uv sync --no-dev --frozen"]
+[phases.install]
+# cmds = ["uv sync --no-dev --frozen"]
 
 # Start command configuration - only run the backend server which will serve frontend assets
 [start]
