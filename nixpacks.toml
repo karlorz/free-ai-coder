@@ -1,0 +1,19 @@
+# Nixpacks configuration for app
+
+providers = ["python"]
+
+[variables]
+NODE_ENV = 'production'
+NIXPACKS_UV_VERSION='0.7.2'
+PYTHON_VERSION = '3.11'
+
+[phases.setup]
+nixPkgs = ['...'] # add nodejs since it is needed to build the frontend
+
+# Then install backend dependencies
+[phases.backend-install]
+cmds = ["uv sync --no-dev --frozen"]
+
+# Start command configuration - only run the backend server which will serve frontend assets
+[start]
+cmd = "./start.sh"

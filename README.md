@@ -12,7 +12,7 @@ A free chatgpt code interpreter implementation, which runs locally on your compu
 
 ## Demo
 
-[![从零开始 打造自己的AI数据分析助手](assets/demo.jpg)](https://www.bilibili.com/video/BV1s5FXe5EFg/?share_source=copy_web&vd_source=981c39eaab5e0c91fb090a05f55c2d4a)
+
 
 ## Feature
 
@@ -37,6 +37,11 @@ jupyter enterprisegateway --port 8889
 
 # start the app
 python3.11 -m streamlit run app.py
+
+# uv
+uv sync --no-dev --frozen
+uv run jupyter enterprisegateway --port 8889
+uv run streamlit run app.py --server.port=8000
 ```
 
 ## Dependencies

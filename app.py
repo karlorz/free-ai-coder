@@ -35,12 +35,15 @@ AVATAR_MATERIAL_ICON_EXECUTION = ":material/screenshot_monitor:"
 AVATAR_MATERIAL_ICON_IMAGE = ":material/image:"
 
 OPENAI_MODELS = ["gpt-4-turbo-preview", "gpt-4-turbo"]
-OPENAI_MODELS = ["gpt-4-turbo-preview", "gpt-4-turbo"]
+OPENAI_MODELS = ["gemini/gemini-2.5-flash-preview-04-17", "gemini/gemini-2.0-flash","qwen/qwq-32b:free","gpt-4-turbo-preview", "gpt-4-turbo"]
 MODEL_PROVIDER_KEY = "model_provider"
 OPENAI_API_KEY_KEY = "openai_api_key"
 OPENAI_MODEL_KEY = "openai_model"
 DEEPSEEK_API_KEY_KEY = "deepseek_api_key"
 DEEPSEEK_MODEL_ENDPOINT_KEY = "deepseek_model_endpoint"
+OPENAI_API_KEY_VALUE = os.getenv("OPENAI_API_KEY", "sk-")
+OPENAI_BASE_URL_KEY = "openai_base_url_input"
+OPENAI_BASE_URL_VALUE = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
 
 def extract_delta_stream(stream):
     for value in stream:
@@ -166,7 +169,7 @@ def setup_sidebar_config_panel():
         # 选择模型提供商
         model_provider = st.radio(
             "选择模型提供商",
-            options=["OpenAI", "Claude", "商汤小浣熊", "DeepSeek"],
+            options=["OpenAI", "DeepSeek"],
             key=MODEL_PROVIDER_KEY
         )
 
@@ -175,6 +178,7 @@ def setup_sidebar_config_panel():
             api_key = st.text_input(
                 "OpenAI API Key",
                 type="password",
+                value=OPENAI_API_KEY_VALUE,  # Preset the value
                 key=OPENAI_API_KEY_KEY,
                 help="请输入您的 OpenAI API Key"
             )
@@ -187,6 +191,15 @@ def setup_sidebar_config_panel():
 
             if not api_key:
                 st.error("请输入 OpenAI API Key")
+
+            base_url = st.text_input(
+                "OpenAI base_url",
+                value=OPENAI_BASE_URL_VALUE,  # Preset the value
+                key=OPENAI_BASE_URL_KEY, # Changed key to avoid conflict with the constant
+                help="请输入您的 OpenAI base_url"
+            )
+            if not base_url:
+                st.error("请输入 OpenAI base_url")
         elif model_provider == "DeepSeek":
             deepseek_api_key = st.text_input(
                 "DeepSeek API Key",
@@ -227,7 +240,8 @@ def setup_sidebar_config_panel():
                 if model_provider == "OpenAI":
                     st.session_state[LLM_CLIENT_KEY] = OpenAILLMClient(
                         api_key,
-                        model=selected_model
+                        model=selected_model,
+                        base_url=base_url,
                     )
                 elif model_provider == "DeepSeek":
                     st.session_state[LLM_CLIENT_KEY] = DeepSeekLLMClient(

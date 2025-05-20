@@ -145,8 +145,10 @@ def wrap_token(token: str):
     return f'<|{token}|>'
 
 class OpenAILLMClient:
-    def __init__(self, api_key, model="gpt-4-turbo-preview"):
-        self.client = openai.OpenAI(api_key=api_key)
+    def __init__(self, api_key, model="gpt-4-turbo-preview", base_url=None):
+        if base_url is None:
+            base_url = "https://api.openai.com/v1"
+        self.client = openai.OpenAI(api_key=api_key, base_url=base_url)
         self.model = model
 
     def chat_completions(
