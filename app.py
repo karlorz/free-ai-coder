@@ -15,7 +15,8 @@ LLM_CLIENT_KEY = "llm_client"
 SESSION_ID_KEY = "session_id"
 
 KERNEL_CLIENT_KEY = "kernel_client"
-SERVER_URL = "127.0.0.1:8889"
+SERVER_URL = os.getenv("SERVER_URL", "localhost:8888")
+KERNEL_NAME_KEY = "kernel_name"
 KERNEL_NAME = "python"
 KERNEL_INIT_CODE = """
 

@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    environment:
+      - KG_PORT=8888
+      - KG_IP=0.0.0.0
+      - KG_ALLOW_ORIGIN=*
+      - SERVICE_FQDN_GATEWAY
+    ports:
+      - "8888:8888"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - traefik.enable=true
+      - coolify.managed=true
+    volumes:
+      - kernel_data:/tmp/kernel
+      - app_data:/usr/local/bin/data
+    networks:
+      - app_network
+
+  streamlit:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SERVICE_FQDN_STREAMLIT
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-sk-}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - SERVER_URL=${SERVER_URL:-host.docker.internal:8888}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - traefik.enable=true
+      - coolify.managed=true
+    volumes:
+      - app_data:/app/data
+    depends_on:
+      gateway:
+        condition: service_healthy
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge
+
+volumes:
+  kernel_data:
+  app_data:

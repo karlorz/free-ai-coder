@@ -1,0 +1,14 @@
+FROM elyra/enterprise-gateway:3.2.0
+
+USER root
+
+# Install additional Python packages
+RUN pip install --no-cache-dir \
+    matplotlib \
+    openpyxl \
+    pandas \
+    numpy \
+    seaborn \
+    ipykernel
+
+EXPOSE 8888
