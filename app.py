@@ -36,7 +36,7 @@ AVATAR_MATERIAL_ICON_EXECUTION = ":material/screenshot_monitor:"
 AVATAR_MATERIAL_ICON_IMAGE = ":material/image:"
 
 OPENAI_MODELS = ["gpt-4-turbo-preview", "gpt-4-turbo"]
-OPENAI_MODELS = ["gemini/gemini-2.5-flash-preview-04-17", "gemini/gemini-2.0-flash","qwen/qwq-32b:free","gpt-4-turbo-preview", "gpt-4-turbo"]
+OPENAI_MODELS = ["gemini/gemini-2.0-flash-lite", "gemini/gemini-2.5-flash-preview-04-17", "gemini/gemini-2.0-flash","qwen/qwq-32b:free","gpt-4-turbo-preview", "gpt-4-turbo"]
 MODEL_PROVIDER_KEY = "model_provider"
 OPENAI_API_KEY_KEY = "openai_api_key"
 OPENAI_MODEL_KEY = "openai_model"
