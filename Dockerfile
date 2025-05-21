@@ -18,6 +18,6 @@ RUN uv sync --no-dev --frozen
 
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 8000
+EXPOSE 8001
 
-CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8000", "--server.address=0.0.0.0"]
+CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8001", "--server.address=0.0.0.0"]
