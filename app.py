@@ -22,7 +22,11 @@ KERNEL_INIT_CODE = """
 
 import matplotlib.pyplot as plt
 
-plt.rcParams['font.sans-serif'] = ['SimHei']
+font_names = [
+    'SimHei', 'Microsoft YaHei', 'PingFang SC', 'WenQuanYi Micro Hei', 
+    'Noto Sans CJK SC', 'Source Han Sans SC', 'Arial Unicode MS'
+]
+plt.rcParams['font.sans-serif'] = font_names
 plt.rcParams['axes.unicode_minus'] = False
 
 """
